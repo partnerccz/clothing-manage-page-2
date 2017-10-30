@@ -25,11 +25,11 @@
   export default {
     name: 'hello',
     mounted: function () {
-      this.$http.post('/', {}).then((response) => {
+      this.$http.post('/', {}).then(response => {
         console.log(Object.assign({}, objNullToBlank(response.data)))
       })
     },
-    data () {
+    data: function () {
       return {
         msg: 'Welcome to Your Vue.js App'
       }
