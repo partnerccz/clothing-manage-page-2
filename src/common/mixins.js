@@ -1,8 +1,8 @@
 /**
  * Created by Administrator on 2017/5/9.
  */
-import {getGames} from './utils'
-import {split, splitGame} from './const'
+//import {getGames} from './utils'
+//import {split, splitGame} from './const'
 
 export let gamesMixin = { // 用法 在页面中 import {gamesMixin} from '../../common/mixins.js'
   data: function () {
