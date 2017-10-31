@@ -30,7 +30,7 @@
     </el-table>
     <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.pageNum" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRec" class="table-pager">
     </el-pagination>
-    <component :is="editCompName" v-model="showEdit" :editRowId="editRowId"></component>
+    <component :is="editCompName" :showDialog.sync="showEdit" :editRowId="editRowId"></component>
     <el-dialog v-model="imgPreviewVisible" size="tiny">
       <img width="100%" :src="imgPreviewUrl" alt="">
     </el-dialog>

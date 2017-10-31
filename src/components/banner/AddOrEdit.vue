@@ -1,11 +1,14 @@
 <template>
-  <el-dialog title="添加/编辑-幻灯片" :value="value" @input="(val) => $emit('input', val)" :close-on-click-modal=false @close="reset" @open="show">
+  <el-dialog title="添加/编辑-幻灯片"  :visible="showDialog" @update:visible="(val) => $emit('update:showDialog', val)" :close-on-click-modal=false @close="reset" @open="show">
     <el-form ref="form" :model="form" :rules="rules" label-width="100px" label-position="right" class="form-style">
       <el-form-item label="分组标签" prop="group_key">
         <el-input v-model="form.group_key"></el-input>
       </el-form-item>
       <el-form-item label="分组内标签" prop="key">
         <el-input v-model="form.key"></el-input>
+      </el-form-item>
+      <el-form-item label="幻灯片名称" prop="name">
+        <el-input v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="描述" prop="des">
         <el-input type="textarea" v-model="form.des"></el-input>
@@ -26,14 +29,14 @@
         </el-upload>
       </el-form-item>
       <el-form-item label="状态" prop="status">
-        <el-select v-model=form.status :disabled="form.id !== ''" placeholder="请选择状态">
+        <el-select v-model=form.status placeholder="请选择状态">
           <el-option label="下线" :value=0></el-option>
           <el-option label="上线" :value=1></el-option>
         </el-select>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="$emit('input', false)">取 消</el-button>
+      <el-button @click="$emit('update:showDialog', false)">取 消</el-button>
       <el-button type="primary" @click="onSubmit">确 定</el-button>
     </span>
   </el-dialog>
@@ -45,12 +48,12 @@ import {objNullToBlank} from '../../common/utils.js'
 
 export default {
   name: 'banner-AddOrEdit',
-  props: ['value', 'editRowId'],
+  props: ['showDialog', 'editRowId'],
   data: function () {
     return {
 //      showForm: false,
 //      loading: false,
-      resetForm: {id: '', group_key: '', key: '', des: '', status: null, sort: '99', click_url: '', img_url: ''},
+      resetForm: {id: '', group_key: '', key: '', name: '', des: '', status: null, sort: '99', click_url: '', img_url: ''},
       form: {},
       rules: {
         group_key: [
@@ -59,8 +62,8 @@ export default {
         key: [
           {type: 'string', required: true, message: '请输入分组内标签', trigger: 'blur'}
         ],
-        status: [
-          {type: 'integer', required: true, message: '请选择状态', trigger: 'blur'}
+        name: [
+          {type: 'string', required: true, message: '请输入幻灯片名称', trigger: 'blur'}
         ],
         sort: [
           {type: 'integer', required: true, message: '请输入权重', trigger: 'blur'}
@@ -70,6 +73,9 @@ export default {
         ],
         img_url: [
           {required: true, message: '请上传图片', trigger: 'blur'}
+        ],
+        status: [
+          {type: 'integer', required: true, message: '请选择状态', trigger: 'blur'}
         ]
       }
     }
@@ -110,7 +116,7 @@ export default {
         if (!valid) { return false }
         this.$http.post('/manage/banner/save', this.form, {showLoading: true}).then((response) => {
 //          this.showForm = false
-          this.$emit('input', false)
+          this.$emit('update:showDialog', false)
           if (this.form.id !== '') { // 编辑完成（刷新列表当前页）
             this.$message({type: 'success', message: '编辑数据成功'})
             bus.$emit(banner.refreshListForEdit, this.form)
