@@ -26,6 +26,10 @@
             <i class="el-icon-menu"></i>
             <span slot="title">幻灯片</span>
           </el-menu-item>
+          <el-menu-item index="/manage/typeGroup">
+            <i class="el-icon-menu"></i>
+            <span slot="title">标签管理</span>
+          </el-menu-item>
           <el-submenu index="3">
             <template slot="title">导航三</template>
             <el-menu-item index="3-1" class="el-menu-2">选项1234</el-menu-item>

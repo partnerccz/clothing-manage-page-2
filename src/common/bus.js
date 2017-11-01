@@ -7,4 +7,11 @@ export const banner = {
   refreshListForEdit: 'banner-refreshListForEdit'
 }
 
+export const typeGroup = {
+  search: 'typeGroup-search',
+  showAddOrEdit: 'typeGroup-showAddOrEdit',
+  refreshListForAdd: 'typeGroup-refreshListForAdd',
+  refreshListForEdit: 'typeGroup-refreshListForEdit'
+}
+
 export default new Vue()
