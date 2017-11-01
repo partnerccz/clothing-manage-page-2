@@ -14,4 +14,11 @@ export const typeGroup = {
   refreshListForEdit: 'typeGroup-refreshListForEdit'
 }
 
+export const type = {
+  search: 'type-search',
+  showAddOrEdit: 'type-showAddOrEdit',
+  refreshListForAdd: 'type-refreshListForAdd',
+  refreshListForEdit: 'type-refreshListForEdit'
+}
+
 export default new Vue()

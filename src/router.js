@@ -8,7 +8,8 @@ const Main = resolve => require(['./components/sys/Index.vue'], resolve)
 const Hello = resolve => require(['./components/Hello.vue'], resolve)
 const Demo = resolve => require(['./components/demo/Index.vue'], resolve)
 const Banner = resolve => require(['./components/banner/Index.vue'], resolve)
-const TypeGroup = resolve => require(['./components/TypeGroup/Index.vue'], resolve)
+const TypeGroup = resolve => require(['./components/typeGroup/Index.vue'], resolve)
+const Type = resolve => require(['./components/type/Index.vue'], resolve)
 
 export default new Router({
   mode: 'history',
@@ -33,6 +34,10 @@ export default new Router({
       path: '/manage/typeGroup',
       name: 'TypeGroup',
       component: TypeGroup
+    }, {
+      path: '/manage/type',
+      name: 'Type',
+      component: Type
     }
   ]
 })
