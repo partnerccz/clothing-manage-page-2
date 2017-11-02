@@ -84,6 +84,7 @@ export default {
     return {
       editCompName: '', // 用于动态加载编辑组件
       showEdit: false, // 是否展示编辑弹窗
+      editRowId: null, // 编辑的记录ID
       pageInfo: {
         pageNum: 1,
         totalRec: 0,

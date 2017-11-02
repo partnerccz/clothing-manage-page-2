@@ -18,44 +18,33 @@
 </template>
 <script>
 import bus, {type} from '../../common/bus.js'
-import { INIT_TYPE } from '../../store/action-types'
-import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'type-search',
-  created: function () {
-    bus.$on(type.refreshListForAdd, () => { // 监听数据添加后的类型数据刷新
-      this.getTypeGroups()
-    })
-  },
   data: function () {
     return {
-      searchData: {group_id: '', name: ''}
+      searchData: {group_id: '', name: ''},
+      typeGroups: [],
+      loading: false
     }
   },
   mounted: function () {
     this.getTypeGroups()
     this.search()
   },
-  computed: mapState([
-    'typeGroups'
-  ]),
   methods: {
     search: function () {
       bus.$emit(type.search, Object.assign({}, this.searchData))
     },
-//    getTypeGroups: function () {
-//      this.$http.post('/manage/typeGroup/getTypeGroups').then((response) => {
-//        this.typeGroups = response.data.list
-//      })
-//    },
+    getTypeGroups: function () {
+      this.$http.post('/manage/typeGroup/getTypeGroups').then((response) => {
+        this.typeGroups = response.data.list
+      })
+    },
     reset: function () {
       this.$refs['formSearch'].resetFields()
       this.search()
-    },
-    ...mapActions({
-      getTypeGroups: INIT_TYPE
-    })
+    }
   }
 }
 </script>

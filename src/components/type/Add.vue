@@ -37,6 +37,7 @@ export default {
       showForm: false,
       resetForm: {group_id: '', name: '', sort: '99', status: 0},
       form: {},
+      typeGroups: [],
       rules: {
         group_id: [
           {type: 'integer', required: true, message: '请输入资讯类型', trigger: 'change'}
