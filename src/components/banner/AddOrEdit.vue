@@ -88,7 +88,7 @@ export default {
       this.reset()
       if (this.editRowId !== null) {
         this.$http.post('/manage/banner/info', {id: this.editRowId}).then((response) => {
-          this.showForm = true
+//          this.showForm = true
           this.form = Object.assign({}, this.resetForm, objNullToBlank(response.data))
         })
       }
