@@ -6,13 +6,13 @@
       <el-button size="small" @click="setStatus(0)">批量下架</el-button>
       <el-button type="danger" size="small" @click="setStatus(-1)">批量删除</el-button>
     </div>
-    <el-table :data="tableData" @row-dblclick="edit" @selection-change="selectChange" :default-sort="orderInfo" @sort-change="sortChange" border highlight-current-row style="width: 100%">
+    <el-table :data="tableData" @row-dblclick="showStandardList" @selection-change="selectChange" :default-sort="orderInfo" @sort-change="sortChange"  highlight-current-row style="width: 100%">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column fixed type="index" label="序号" width="70"></el-table-column>
+      <!--<el-table-column fixed type="index" label="序号" width="70"></el-table-column>-->
       <el-table-column fixed prop="id" label="ID" min-width="30"></el-table-column>
       <el-table-column fixed prop="name" label="名称" min-width="70"></el-table-column>
-      <el-table-column fixed prop="country" label="国家" min-width="70"></el-table-column>
-      <el-table-column fixed prop="brand" label="品牌" min-width="70"></el-table-column>
+      <el-table-column prop="country" label="国家" min-width="70"></el-table-column>
+      <el-table-column prop="brand" label="品牌" min-width="70"></el-table-column>
       <el-table-column prop="fruit_type" label="水果类型" show-overflow-tooltip min-width="100"></el-table-column>
       <el-table-column sortable prop="sort" label="排序" min-width="50"></el-table-column>
       <el-table-column sortable prop="fresh_time" label="保鲜时长" width="90"></el-table-column>
@@ -42,24 +42,30 @@
       :current-page="pageInfo.pageNum"
       :page-sizes="[10, 20, 50, 100]"
       :page-size="pageInfo.pageSize"
-      layout="total, prev, pager, next"
+      layout="total, sizes, prev, pager, next"
       :total="pageInfo.totalRec" class="table-pager">
     </el-pagination>
     <!--layout="total, sizes, prev, pager, next, jumper"-->
+    <transition name="standard" mode="out-in">
+      <sub-list v-show="showStandard" :standard.sync="showStandard"></sub-list>
+    </transition>
     <component :is="editCompName" :showDialog.sync="showEdit" :editRowId="editRowId"></component>
   </div>
 </template>
 
 <script>
-import bus, {setting} from '../../common/bus.js'
+import bus, {setting, productStandard} from '../../common/bus.js'
 import {localStorageKeys} from '../../common/const.js'
+import subList from './SubList'
 
 export default {
+  name: 'product',
   components: {
     // tableForm: resolve => require(['./AddOrEdit'], resolve) // 必须用下面的方式加载，否则会出现组件加载完成后立即销毁（一闪而过）
     tableForm: resolve => {
       require(['./AddOrEdit'], resolve)
-    }
+    },
+    subList
   },
   created: function () {
     bus.$on(setting.search, (searchData) => { // 监听外部查询数据事件
@@ -81,6 +87,7 @@ export default {
       editCompName: '', // 用于动态加载编辑组件
       showEdit: false, // 是否展示编辑弹窗
       editRowId: null, // 编辑的记录ID
+      showStandard: false, // 是否展示规格
       pageInfo: {
         pageNum: 1,
         totalRec: 0,
@@ -140,6 +147,9 @@ export default {
       this.editRowId = row.id
       this.showEdit = true
     },
+    showStandardList: function (row) {
+      bus.$emit(productStandard.search, row.id)
+    },
     add: function () { // 添加记录
 //      bus.$emit(setting.showAddOrEdit)
       this.editCompName = 'tableForm'
@@ -175,4 +185,42 @@ export default {
 </script>
 
 <style scoped>
+  .table-list {
+    position: relative;
+    overflow: hidden;
+  }
+  /*.standard-enter-active {*/
+    /*transition: width 1s;*/
+    /*transition: background 0.5s ease-in,color 0.3s ease-out;*/
+    /*transition: all 0.5s ease-in;*/
+    /*animation: bounce-in .5s;*/
+    /*left: 101px;*/
+  /*}*/
+  /*.standard-leave-active {*/
+    /*transition: background 0.5s ease-in,color 0.3s ease-out;*/
+    /*transition: all 0.5s ease-in;*/
+    /*left: 1000px;*/
+    /*transition: width 1s;*/
+
+    /*animation: bounce-in .5s reverse;*/
+  /*}*/
+  /*.standard-enter, .standard-leave-to{*/
+    /*transition: all 0.5s ease-in;*/
+    /*opacity: 0;*/
+    /*left: 1000px;*/
+  /*}*/
+
+  .standard-enter-active, .standard-leave-active {
+    /*transition: opacity .5s;*/
+    transition: all 0.3s ease;
+    left: 20% !important;
+    /*opacity: 0;*/
+  }
+
+  .standard-enter, .standard-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+    /*opacity: 0;*/
+    /*transition: all 0.5s ease;*/
+    left: 100% !important;
+    /*opacity: 1;*/
+  }
 </style>

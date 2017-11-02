@@ -28,13 +28,15 @@ body{
 }
 .table-list .el-table{
   border-left: 0px;
+  border-top: 1px solid #d7dee7;
 }
 .table-list .table-pager{
   text-align: center;
   padding: 5px 0;
 }
 .table-list .action{
-  margin: 10px;
+  padding: 10px;
+  background: white;
 }
 .table-list .el-button--text.disable{
   color: #48576a;
@@ -71,4 +73,8 @@ body{
 .pic-uploader-icon{
   padding: 100px 160px;
   font-size: 28px;
+}
+/*表格横向滚动时，出现滚动条*/
+.el-table__fixed-right, .el-table__fixed {
+  overflow-y: hidden;
 }
