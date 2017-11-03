@@ -21,4 +21,11 @@ export const type = {
   refreshListForEdit: 'type-refreshListForEdit'
 }
 
+export const setting = {
+  search: 'setting-search',
+  showAddOrEdit: 'setting-showAddOrEdit',
+  refreshListForAdd: 'setting-refreshListForAdd',
+  refreshListForEdit: 'setting-refreshListForEdit'
+}
+
 export default new Vue()
