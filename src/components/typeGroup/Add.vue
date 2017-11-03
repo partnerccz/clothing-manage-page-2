@@ -43,6 +43,9 @@ export default {
       }
     }
   },
+  mounted: function () {
+    this.reset()
+  },
   methods: {
     show: function () {
       this.reset()

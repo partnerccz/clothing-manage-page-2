@@ -53,6 +53,7 @@ export default {
     }
   },
   mounted: function () {
+    this.reset()
     this.getTypeGroups()
   },
   methods: {
