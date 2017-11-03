@@ -22,7 +22,8 @@
           <el-input v-show="scope.row.showEdit === 1" v-model="scope.row.name" size="small"></el-input>
         </template>
       </el-table-column>
-      <el-table-column prop="name" label="权重"  width="180">
+      <el-table-column prop="type_product_count" label="商品总数"  width="80"></el-table-column>
+      <el-table-column prop="name" label="权重"  width="80">
         <template scope="scope">
           <span v-show="scope.row.showEdit !== 1">{{scope.row.sort}}</span>
           <el-input v-show="scope.row.showEdit === 1" v-model="scope.row.sort" size="small"></el-input>
