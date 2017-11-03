@@ -33,6 +33,7 @@ export const product = {
   add: 'product-add',
   edit: 'product-edit'
 }
+
 export const productStandard = {
   search: 'productStandard-search',
   add: 'productStandard-add',
