@@ -49,6 +49,9 @@ import {objNullToBlank} from '../../common/utils.js'
 export default {
   name: 'banner-AddOrEdit',
   props: ['showDialog', 'editRowId'],
+  mounted: function () {
+    this.reset()
+  },
   data: function () {
     return {
 //      showForm: false,

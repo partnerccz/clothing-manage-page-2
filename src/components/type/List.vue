@@ -8,7 +8,14 @@
     <el-table :data="tableData" @row-dblclick="edit" @selection-change="selectChange" :default-sort="orderInfo" @sort-change="sortChange" border highlight-current-row style="width: 100%">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column type="index" label="序号" width="70"></el-table-column>
-      <el-table-column prop="type_group_name" label="分类标签"  min-width="100"></el-table-column>
+      <el-table-column prop="group_id" label="分类标签" min-width="100">
+        <template scope="scope">
+          <el-tag v-show="scope.row.showEdit !== 1">{{scope.row.type_group_name}}</el-tag>
+          <el-select v-model="scope.row.group_id" v-show="scope.row.showEdit === 1" filterable placeholder="请选择" size="small">
+            <el-option v-for="item in typeGroups" :label="item.name" :value="item.id" :key="item.id"></el-option>
+          </el-select>
+        </template>
+      </el-table-column>
       <el-table-column prop="name" label="分类名称"  min-width="100">
         <template scope="scope">
           <span v-show="scope.row.showEdit !== 1">{{scope.row.name}}</span>
@@ -99,7 +106,15 @@ export default {
       typeGroups: []
     }
   },
+  mounted: function () {
+    this.getTypeGroups()
+  },
   methods: {
+    getTypeGroups: function () {
+      this.$http.post('/manage/typeGroup/getTypeGroups').then((response) => {
+        this.typeGroups = response.data.list
+      })
+    },
     search: function (data) { // 点击搜索时执行
       this.resetPageInfo()
       this.searchData = data
