@@ -25,13 +25,14 @@
       <el-table-column fixed="right" prop="week_sell_num" label="周销量" width="70"></el-table-column>
       <el-table-column fixed="right" prop="status" label="状态" width="70">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status === 1 ? 'success' : 'gray'" close-transition>{{scope.row.status === 1 ? '启用' :  '禁用'}}</el-tag>
+          <el-switch v-model="scope.row.status" :active-value=1 :inactive-value=0 @change="val => setStatus(val, scope.row.id)"></el-switch>
+          <!--<el-tag :type="scope.row.status === 1 ? 'success' : 'gray'" close-transition>{{scope.row.status === 1 ? '启用' :  '禁用'}}</el-tag>-->
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="setStatus(scope.row.status === 1 ? 0 : 1, [scope.row.id])" type="text" size="small" :class="scope.row.status === 1 ? 'disable' : 'enable'">{{scope.row.status === 1 ? '禁用' : '启用'}}</el-button>
+          <!--<el-button @click="setStatus(scope.row.status === 1 ? 0 : 1, [scope.row.id])" type="text" size="small" :class="scope.row.status === 1 ? 'disable' : 'enable'">{{scope.row.status === 1 ? '禁用' : '启用'}}</el-button>-->
           <el-button @click="setStatus(-1, [scope.row.id])" type="text" size="small" class="delete">删除</el-button>
         </template>
       </el-table-column>
@@ -54,9 +55,9 @@
 </template>
 
 <script>
-import bus, {setting, productStandard} from '../../common/bus.js'
+import bus, {product, productStandard} from '../../common/bus.js'
 import {localStorageKeys} from '../../common/const.js'
-import subList from './SubList'
+import subList from '../productStandard/list'
 
 export default {
   name: 'product',
@@ -68,13 +69,13 @@ export default {
     subList
   },
   created: function () {
-    bus.$on(setting.search, (searchData) => { // 监听外部查询数据事件
+    bus.$on(product.search, (searchData) => { // 监听外部查询数据事件
       this.search(searchData)
     })
-    bus.$on(setting.refreshListForEdit, () => { // 监听数据更改后的列表刷新（刷新当前页）
+    bus.$on(product.edit, () => { // 监听数据更改后的列表刷新（刷新当前页）
       this.getData()
     })
-    bus.$on(setting.refreshListForAdd, () => { // 监听数据添加后的列表刷新
+    bus.$on(product.add, () => { // 监听数据添加后的列表刷新
       this.resetPageInfo()
       this.orderInfo.prop = 'create_time'
       this.orderInfo.order = 'descending'
@@ -82,7 +83,7 @@ export default {
     })
   },
   data: function () {
-    let pageSize = localStorage.getItem(localStorageKeys.settingPageSize)
+    let pageSize = localStorage.getItem(localStorageKeys.productPageSize)
     return {
       editCompName: '', // 用于动态加载编辑组件
       showEdit: false, // 是否展示编辑弹窗
@@ -123,7 +124,7 @@ export default {
         return
       }
       if (status === -1) { // 如果是删除，则提示
-        this.$confirm('确认要删除数据（不可恢复）?', '提示', {
+        this.$confirm('确认要删除数据?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -137,12 +138,11 @@ export default {
     _setStatus: function (status, selectIds) {
       // let testObj = {id: 1, name: 'test', mark: 'test'}
       // let testObj = [{id: 1, name: 'test', mark: 'test'}, [id: 2, name: 'test2', mark: 'test2'], [id: 3, name: 'test3', mark: 'test3']}
-      this.$http.post('/manage/setting/changeStatus', {ids: selectIds, status: status}).then((response) => {
+      this.$http.post('/product/setStatus', {ids: selectIds, status: status}).then((response) => {
         this.getData()
       })
     },
     edit: function (row) { // 编辑某条记录
-//      bus.$emit(setting.showAddOrEdit, row.id)
       this.editCompName = 'tableForm'
       this.editRowId = row.id
       this.showEdit = true
@@ -151,14 +151,13 @@ export default {
       bus.$emit(productStandard.search, row.id)
     },
     add: function () { // 添加记录
-//      bus.$emit(setting.showAddOrEdit)
       this.editCompName = 'tableForm'
       this.editRowId = null
       this.showEdit = true
     },
     handleSizeChange: function (val) { // 每页条数改变时重新加载记录
       this.pageInfo.pageSize = val
-      localStorage.setItem(localStorageKeys.settingPageSize, val)
+      localStorage.setItem(localStorageKeys.productPageSize, val)
       this.getData()
     },
     handleCurrentChange: function (val) { // 页码改变时重新加载记录
@@ -189,38 +188,12 @@ export default {
     position: relative;
     overflow: hidden;
   }
-  /*.standard-enter-active {*/
-    /*transition: width 1s;*/
-    /*transition: background 0.5s ease-in,color 0.3s ease-out;*/
-    /*transition: all 0.5s ease-in;*/
-    /*animation: bounce-in .5s;*/
-    /*left: 101px;*/
-  /*}*/
-  /*.standard-leave-active {*/
-    /*transition: background 0.5s ease-in,color 0.3s ease-out;*/
-    /*transition: all 0.5s ease-in;*/
-    /*left: 1000px;*/
-    /*transition: width 1s;*/
-
-    /*animation: bounce-in .5s reverse;*/
-  /*}*/
-  /*.standard-enter, .standard-leave-to{*/
-    /*transition: all 0.5s ease-in;*/
-    /*opacity: 0;*/
-    /*left: 1000px;*/
-  /*}*/
-
   .standard-enter-active, .standard-leave-active {
-    /*transition: opacity .5s;*/
     transition: all 0.3s ease;
     left: 20% !important;
-    /*opacity: 0;*/
   }
 
   .standard-enter, .standard-leave-to /* .fade-leave-active in below version 2.1.8 */ {
-    /*opacity: 0;*/
-    /*transition: all 0.5s ease;*/
     left: 100% !important;
-    /*opacity: 1;*/
   }
 </style>

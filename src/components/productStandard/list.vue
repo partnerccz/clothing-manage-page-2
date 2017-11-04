@@ -105,13 +105,11 @@ export default {
       })
     },
     edit: function (row) { // 编辑某条记录
-//      bus.$emit(setting.showAddOrEdit, row.id)
       this.editCompName = 'tableForm'
       this.editRowId = row.id
       this.showEdit = true
     },
     add: function () { // 添加记录
-//      bus.$emit(setting.showAddOrEdit)
       this.editCompName = 'tableForm'
       this.editRowId = null
       this.showEdit = true
@@ -173,9 +171,6 @@ export default {
     height: 100%;
     .el-table__header-wrapper {
       width: 100%;
-    }
-    .el-switch {
-      height: 25px;
     }
     table.el-table__header, table.el-table__body,.el-table__empty-block {
       width: auto !important;

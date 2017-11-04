@@ -74,7 +74,15 @@ body{
   padding: 100px 160px;
   font-size: 28px;
 }
-/*表格横向滚动时，出现滚动条*/
+/*表格横向滚动时，出现s竖着的滚动条*/
 .el-table__fixed-right, .el-table__fixed {
   overflow-y: hidden;
+}
+/*去掉日期框右边的空白占位*/
+.el-date-editor.el-input, .el-date-editor.el-input__inner {
+  width: auto;
+}
+/*列表中的状态切换组件显示不全*/
+.el-switch {
+  height: 25px;
 }

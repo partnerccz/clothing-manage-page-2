@@ -11,7 +11,7 @@ import tableSearch from './Search'
 import tableList from './List'
 
 export default {
-  name: 'setting',
+  name: 'product',
   components: {
     tableSearch,
     tableList

@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import bus, { setting } from '../../common/bus.js'
+import bus, { product } from '../../common/bus.js'
 import { objNullToBlank } from '../../common/utils.js'
 import { INIT_TYPE } from '../../store/action-types'
 import { mapState, mapActions } from 'vuex'
@@ -205,10 +205,10 @@ export default {
           this.$emit('update:showDialog', false)
           if (this.form.id !== '') { // 编辑完成（刷新列表当前页）
             this.$message({type: 'success', message: '编辑数据成功'})
-            bus.$emit(setting.refreshListForEdit, this.form)
+            bus.$emit(product.edit, this.form)
           } else { // 新增完成（跳到第一页）
             this.$message({type: 'success', message: '添加数据成功'})
-            bus.$emit(setting.refreshListForAdd, this.form)
+            bus.$emit(product.add, this.form)
           }
         })
       })

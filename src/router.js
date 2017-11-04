@@ -6,7 +6,7 @@ Vue.use(Router)
 
 const Main = resolve => require(['./components/sys/Index.vue'], resolve)
 const Hello = resolve => require(['./components/Hello.vue'], resolve)
-const Demo = resolve => require(['./components/demo/Index.vue'], resolve)
+const Product = resolve => require(['./components/product/Index.vue'], resolve)
 const Banner = resolve => require(['./components/banner/Index.vue'], resolve)
 const TypeGroup = resolve => require(['./components/typeGroup/Index.vue'], resolve)
 const Type = resolve => require(['./components/type/Index.vue'], resolve)
@@ -23,9 +23,9 @@ export default new Router({
       name: 'Hello',
       component: Hello
     }, {
-      path: '/demo',
-      name: 'Demo',
-      component: Demo
+      path: '/product',
+      name: 'Product',
+      component: Product
     }, {
       path: '/manage/banner',
       name: 'Banner',
