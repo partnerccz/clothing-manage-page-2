@@ -15,8 +15,7 @@
       <el-table-column prop="brand" label="品牌" min-width="70"></el-table-column>
       <el-table-column prop="fruit_type" label="水果类型" show-overflow-tooltip min-width="100"></el-table-column>
       <el-table-column sortable prop="sort" label="排序" min-width="50"></el-table-column>
-      <el-table-column sortable prop="fresh_time" label="保鲜时长" width="90"></el-table-column>
-      <el-table-column sortable prop="fresh_expire_time" label="保鲜过期时间" width="180"></el-table-column>
+      <el-table-column sortable prop="fresh_time" label="保鲜时长(天)" width="90" :formatter="formatterFreshTime"></el-table-column>
       <el-table-column prop="fruit_des" label="果品特征" width="180"></el-table-column>
       <el-table-column prop="store_way" label="存储方式" width="180"></el-table-column>
       <el-table-column prop="create_time" label="创建时间" width="180"></el-table-column>
@@ -32,6 +31,7 @@
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
+          <el-button @click="edit(scope.row)" type="text" size="small">行情</el-button>
           <!--<el-button @click="setStatus(scope.row.status === 1 ? 0 : 1, [scope.row.id])" type="text" size="small" :class="scope.row.status === 1 ? 'disable' : 'enable'">{{scope.row.status === 1 ? '禁用' : '启用'}}</el-button>-->
           <el-button @click="setStatus(-1, [scope.row.id])" type="text" size="small" class="delete">删除</el-button>
         </template>
@@ -57,7 +57,7 @@
 <script>
 import bus, {product, productStandard} from '../../common/bus.js'
 import {localStorageKeys} from '../../common/const.js'
-import subList from '../productStandard/list'
+import subList from '../productStandard/List'
 
 export default {
   name: 'product',
@@ -178,6 +178,9 @@ export default {
       this.orderInfo.order = order
       this.resetPageInfo()
       this.getData()
+    },
+    formatterFreshTime: function (row, column) {
+      return row.fresh_time / (24 * 60)
     }
   }
 }

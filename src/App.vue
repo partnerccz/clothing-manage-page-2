@@ -18,7 +18,7 @@
             <el-menu-item index="1-3" class="el-menu-2">选项3</el-menu-item>
             <el-menu-item index="1-4-1" class="el-menu-2">选项1</el-menu-item>
           </el-submenu>
-          <el-menu-item index="/demo">
+          <el-menu-item index="/product">
             <i class="el-icon-menu"></i>
             <span slot="title">商品</span>
           </el-menu-item>

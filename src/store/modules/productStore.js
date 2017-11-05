@@ -1,17 +1,28 @@
 import {PRODUCT_TYPE_LIST} from '../action-types'
-import {PRODUCT_SET_TYPE_LIST} from '../mutation-types'
+import {PRODUCT_TYPE_LIST_SET} from '../mutation-types'
 import axiosIntence from '../../common/axiosIntence'
 
 // 针对需后台请求的数据，初始值为null，针对本地数据，直接赋值
 const state = {
-  typeList: null,
+  typeList: null, // 类型列表
+  // keywordsList: null, // 关键字
   fruitTypeList: ['苹果', '梨', '柑橘'],
-  measureUnitList: ['斤', '个', '箱', '柜'],
+  measureUnitList: ['箱', '斤'],
   productionInfoList: [
-    {country: '中国', province: ['新疆', '云南', '四川']},
-    {country: '智利', province: []},
-    {country: '南非', province: []}],
-  freshMinuteList: [7 * 24 * 60, 10 * 24 * 60, 15 * 24 * 60, 20 * 24 * 60, 25 * 24 * 60, 30 * 24 * 60],
+    {value: '中国',
+      label: '中国',
+      children: [
+        {value: '新疆', label: '新疆'},
+        {value: '云南', label: '云南'}, {value: '四川', label: '四川'}]},
+    {value: '智利', label: '智利'},
+    {value: '南非', label: '南非'}],
+  freshMinuteList: [
+    {id: 7 * 24 * 60, name: '7天'},
+    {id: 10 * 24 * 60, name: '10天'},
+    {id: 15 * 24 * 60, name: '15天'},
+    {id: 20 * 24 * 60, name: '20天'},
+    {id: 25 * 24 * 60, name: '25天'},
+    {id: 30 * 24 * 60, name: '30天'}],
   marketFeedbackList: [{id: 1, name: '供货平稳'}, {id: 2, name: '抢购'}],
   supplyGoodsList: [{id: 1, name: '充足'}, {id: 2, name: '紧张'}],
   recommendList: [
@@ -27,15 +38,26 @@ const actions = {
     if (state.typeList !== null) { // 已初始化过，不需要再获取数据
       return
     }
-    axiosIntence.post('/getType').then((response) => {
-      commit(PRODUCT_SET_TYPE_LIST, {typeList: response.data}) // 提交设置类型的变更
+    axiosIntence.post('/manage/type/getTypes').then((response) => {
+      commit(PRODUCT_TYPE_LIST_SET, {typeList: response.data}) // 提交设置类型的变更
     })
+  // },
+  // [PRODUCT_KEYWORDS_LIST] ({ commit, state }) {
+  //   if (state.keywordsList !== null) { // 已初始化过，不需要再获取数据
+  //     return
+  //   }
+  //   axiosIntence.post('/getType').then((response) => {
+  //     commit(PRODUCT_KEYWORDS_LIST_SET, {keywordsList: response.data}) // 提交设置类型的变更
+  //   })
   }
 }
 // 必须同步更改数据
 const mutations = {
-  [PRODUCT_SET_TYPE_LIST] (state, { typeList }) {
+  [PRODUCT_TYPE_LIST_SET] (state, { typeList }) {
     state.typeList = typeList || []
+  // },
+  // [PRODUCT_KEYWORDS_LIST_SET] (state, { keywordsList }) {
+  //   state.keywordsList = keywordsList || []
   }
 }
 

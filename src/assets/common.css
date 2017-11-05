@@ -70,7 +70,7 @@ body{
 .pic-uploader img{
   width: 350px;
 }
-.pic-uploader-icon{
+.pic-uploader .pic-uploader-icon{
   padding: 100px 160px;
   font-size: 28px;
 }
