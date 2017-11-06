@@ -1,50 +1,66 @@
 <template>
-  <el-dialog title="添加/编辑配置" :visible="showDialog" @update:visible="(val) => $emit('update:showDialog', val)" :close-on-click-modal=false @open="show" @close="reset">
-    <el-form ref="form" :model="form" :rules="rules" label-width="100px" label-position="right" class="form-style">
-      <el-form-item label="父菜单" prop="parent_id">
-        <el-select v-model="form.parent_id" @change="topMenuChange" :disabled="topMenuDisable" filterable placeholder="请择父菜单">
-          <el-option v-for="item in topMenu" :key="item.id" :label="item.name" :value="item.id"></el-option>
-        </el-select>
+  <el-dialog title="商品规格添加/编辑" class="product-standard-form" width="60%" :visible="showDialog" @update:visible="(val) => $emit('update:showDialog', val)" :append-to-body=true :close-on-click-modal=false @open="show" @close="reset">
+    <el-form ref="form" :model="productStandard" :rules="rules" label-width="100px" label-position="right" class="form-style">
+      <el-form-item class="line" v-if="this.editRowId !== null" label="规格ID" prop="id">{{productStandard.id}}</el-form-item>
+      <el-form-item class="line" label="规格名" prop="name">
+        <el-input v-model="productStandard.name"></el-input>
       </el-form-item>
-      <el-form-item label="类型" prop="type">
-        <el-select v-model="form.type" @change="typeChange" :disabled="typeDisable" filterable allow-create placeholder="请输入或选择类型">
-          <el-option v-for="item in types" :key="item" :label="item" :value="item"></el-option>
-        </el-select>
+      <el-form-item class="line" label="副标题" prop="sub_title">
+        <el-input v-model="productStandard.sub_title"></el-input>
       </el-form-item>
-      <el-form-item label="名称" prop="name">
-        <el-input v-model="form.name"></el-input>
+      <el-form-item label="原售价" prop="original_price">
+        <el-input-number v-model="productStandard.original_price" controls-position="right" :min="0" :max="99999999" :step="10"></el-input-number>
       </el-form-item>
-      <el-form-item label="链接地址" prop="url">
-        <el-input v-model="form.url"></el-input>
+      <el-form-item label="现售价" prop="sell_price">
+        <el-input-number v-model="productStandard.sell_price" controls-position="right" :min="0" :max="99999999" :step="10"></el-input-number>
       </el-form-item>
-      <el-form-item label="图标" prop="icon">
-        <el-upload class="avatar-uploader"
-          :action="_uploadFilePath"
-          :show-file-list="false"
-          :on-success="handleAvatarScucess"
-          :before-upload="beforeAvatarUpload">
-          <img v-if="form.icon" :src="form.icon" class="avatar-img" @error="imgError">
-          <i v-else class="el-icon-plus avatar-uploader-icon">&nbsp;&nbsp;&nbsp;添加图标</i>
-        </el-upload>
-        <!-- <el-input v-model="form.icon"></el-input> -->
+      <el-form-item label="现售称重单价" prop="weight_price">
+        <el-input-number v-model="productStandard.weight_price" controls-position="right" :min="0" :max="99999999" :step="10"></el-input-number>
       </el-form-item>
-      <el-form-item label="权重" prop="weight">
-        <el-input-number v-model="form.weight" :min="1" :max="9999999"></el-input-number>
+      <el-form-item label="进货价" prop="cost_price">
+        <el-input-number v-model="productStandard.cost_price" controls-position="right" :min="0" :max="99999999" :step="10"></el-input-number>
       </el-form-item>
-      <el-form-item label="热" prop="is_hot">
-        <el-switch v-model="form.is_hot" on-color="#ff4949" on-text="热" off-text=""></el-switch>
+      <el-form-item label="基础运费" prop="shipping_fee">
+        <el-input-number v-model="productStandard.shipping_fee" controls-position="right" :min="0" :max="99999999" :step="10"></el-input-number>
       </el-form-item>
-      <el-form-item label="扩展值" prop="ext">
-        <el-input v-model="form.ext"></el-input>
+      <el-form-item label="装箱重量" prop="carton_weight">
+        <el-input-number v-model="productStandard.carton_weight" controls-position="right" :min="0" :max="99999999" :step="10"></el-input-number>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input v-model="form.remark"></el-input>
+      <el-form-item label="单果重量" prop="fruit_weight">
+        <el-input-number v-model="productStandard.fruit_weight" controls-position="right" :min="0" :max="99999999" :step="10"></el-input-number>
       </el-form-item>
-      <el-form-item label="状态">
-        <el-select v-model="form.status">
-          <el-option label="启用" :value=1></el-option>
-          <el-option label="禁用" :value=0></el-option>
-        </el-select>
+      <el-form-item label="毛重" prop="gross_weight">
+        <el-input-number v-model="productStandard.gross_weight" controls-position="right" :min="0" :max="99999999" :step="10"></el-input-number>
+      </el-form-item>
+      <el-form-item label="起购数量" prop="purchase_quantity_min">
+        <el-input-number v-model="productStandard.purchase_quantity_min" controls-position="right" :min="0" :max="99999999" :step="10"></el-input-number>
+      </el-form-item>
+      <el-form-item label="限购数量" prop="purchase_quantity_max">
+        <el-input-number v-model="productStandard.purchase_quantity_max" controls-position="right" :min="0" :max="99999999" :step="10"></el-input-number>
+      </el-form-item>
+      <el-form-item class="line" label="限时销售" prop="buyTimeRange">
+        <el-date-picker v-model="productStandard.buyTimeRange" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
+      </el-form-item>
+      <el-form-item label="采购单排序" prop="sort_purchase">
+        <el-input-number v-model="productStandard.sort_purchase" controls-position="right" :min="0" :max="99999999" :step="1"></el-input-number>
+      </el-form-item>
+      <el-form-item label="出货单排序" prop="sort_sold_out">
+        <el-input-number v-model="productStandard.sort_sold_out" controls-position="right" :min="0" :max="99999999" :step="1"></el-input-number>
+      </el-form-item>
+      <el-form-item label="分拣单排序" prop="sort_split">
+        <el-input-number v-model="productStandard.sort_split" controls-position="right" :min="0" :max="99999999" :step="1"></el-input-number>
+      </el-form-item>
+      <el-form-item label="库存" prop="stock">
+        <el-input-number v-model="productStandard.stock" controls-position="right" :min="0" :max="99999999" :step="10"></el-input-number>
+      </el-form-item>
+      <el-form-item label="上架" prop="status">
+        <el-switch v-model="productStandard.status" :active-value=1 :inactive-value=0 active-text="是" inactive-text="否"></el-switch>
+      </el-form-item>
+      <el-form-item label="默认" prop="is_default">
+        <el-radio-group v-model="productStandard.is_default">
+          <el-radio :label="1">是</el-radio>
+          <el-radio :label="0">否</el-radio>
+        </el-radio-group>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -55,17 +71,12 @@
 </template>
 
 <script>
-import bus, { product } from '../../common/bus.js'
-import { objNullToBlank } from '../../common/utils.js'
-import { INIT_TYPE } from '../../store/action-types'
-import { mapState, mapActions } from 'vuex'
-// import { createNamespacedHelpers } from 'vuex'
-
-// const { mapState, mapActions } = createNamespacedHelpers('types')
+import bus, { productStandard } from '../../common/bus.js'
+import { objNullToBlank, dateFmt, stringFmtDate } from '../../common/utils.js'
 
 export default {
-  name: 'settingAddOrEdit',
-  props: ['showDialog', 'editRowId'],
+  name: 'productStandardAddOrEdit',
+  props: ['showDialog', 'editRowId', 'productId'],
 //  created: function () {
 //    // 监听外部查询数据事件
 //    bus.$on(setting.showAddOrEdit, (id) => {
@@ -78,137 +89,66 @@ export default {
 //    })
 //  },
   mounted: function () {
-    this.reset()
-    this.getTypes()
-    this.getTopMenu()
+    this.show()
   },
   data: function () {
     return {
-//      showForm: false,
-//      types: [],
-      topMenu: [],
-      typeDisable: false,
-      topMenuDisable: false,
-      resetForm: {id: '', type: '', parent_id: 0, parent_name: '', name: '', url: '', icon: '', weight: 99, is_hot: false, ext: '', remark: '', status: 1},
-      form: {},
+      resetForm: {id: '', name: '', sub_title: '', original_price: 0, sell_price: 0, weight_price: 0, cost_price: 0, shipping_fee: 0, carton_weight: 0, fruit_weight: 0, gross_weight: 0, purchase_quantity_min: 0, purchase_quantity_max: 0, buyTimeRange: [], sort_purchase: 100, sort_sold_out: 100, sort_split: 100, stock: 9999, status: 1, is_default: 0},
+      productStandard: {},
       rules: {
-        type: [
-          {required: true, message: '请输入或选择类型', trigger: 'blur,change'},
+        name: [
+          {required: true, message: '请输入名称', trigger: 'blur'},
           {min: 2, max: 40, message: '长度在 2 到40 个字符', trigger: 'blur,change'}
         ],
-        name: [
-          {required: true, message: '请输入名称', trigger: 'blur'}
-        ],
-        url: [
-          {type: 'url', message: '必须为URL格式', trigger: 'blur'}
+        sub_title: [
+          {required: true, message: '请输入副标题', trigger: 'blur'},
+          {min: 2, max: 150, message: '长度在 2 到40 个字符', trigger: 'blur,change'}
         ]
       }
     }
   },
-  computed: mapState([
-    'types'
-  ]),
-//  computed: mapState({
-//    types: state => state.types.types // 如果使用了模块，但是没指定命名空间，则使用该方式将状态树种的数据混合到组件中
-//  }),
   methods: {
-    imgError: function () {
-      this.form.icon = ''
-    },
-    show: function () { // 首次显示dialog时，show方法不会执行，所以需要在mounted中添加reset，否则初始化页面的数据有问题
+    show: function () { // 首次显示dialog时，show方法不会执行，所以需要在mounted中调用，后续直接通过dialog的open方法调用
       this.reset()
       if (this.editRowId !== null) {
-        this.$http.post('/manage/setting/info', {id: this.editRowId}).then((response) => {
-          this.form = Object.assign({}, objNullToBlank(response.data), {is_hot: response.data.is_hot === 1})
-//          this.showForm = true
-          this.typeDisable = true
-          this.topMenuDisable = true
+        this.$http.post('/productStandard/info', {id: this.editRowId}, {showLoading: true}).then((response) => {
+          var timeRange = []
+          if (response.data.buy_start_time !== null && response.data.buy_end_time !== null) {
+            timeRange.push(stringFmtDate(response.data.buy_start_time))
+            timeRange.push(stringFmtDate(response.data.buy_end_time))
+          }
+          delete response.data.buy_start_time
+          delete response.data.buy_end_time
+          this.productStandard = Object.assign({}, objNullToBlank(response.data), {buyTimeRange: timeRange})
         })
       }
-    },
-    ...mapActions({
-      getTypes: INIT_TYPE
-    }),
-//    getTypes: function () { // 获取类型数据
-//      this.$http.post('/getType', {}).then((response) => {
-//        this.types = response.data
-//      })
-//    },
-    getTopMenu: function () { // 获取一级菜单
-      this.$http.post('/getTopMenu', {}).then((response) => {
-        this.topMenu = response.data
-        this.topMenu.splice(0, 0, {id: 0, name: '无'})
-      })
-    },
-    typeChange: function (type) {
-      if (type === '') {
-        return
-      }
-      let selectItem = this.types.filter((thisType) => { // 判断是否存在该类型
-        return thisType === type
-      })
-      let topMenuItem = this.topMenu.filter((menu) => { // 判断父菜单中是否存在该类型
-        return menu.type === type
-      })
-      if (selectItem.length === 0) { // 如果不存在则添加
-        this.types.push(type)
-        this.form.type = type
-      }
-      if (this.typeDisable) { // 如果是编辑的情况下，不级联
-        return
-      }
-      if (topMenuItem.length > 0) { // 如果存在就在父菜单改变相应的名字
-        this.form.parent_name = topMenuItem[0].name
-        this.form.parent_id = topMenuItem[0].id
-      } else { // 不存在则在父菜单下拉框显示无
-        this.form.parent_id = 0
-      }
-    },
-    topMenuChange: function (id) {
-      // this.typeDisable = false
-      if (id === 0) {
-        this.form.parent_name = ''
-        return
-      }
-      let selectItem = this.topMenu.filter((menu) => {
-        return menu.id === id
-      })
-      if (selectItem.length > 0) {
-        this.form.parent_name = selectItem[0].name
-        this.form.type = selectItem[0].type
-        // this.typeDisable = true
-      }
-    },
-    handleAvatarScucess: function (res, file) {
-      if (res) {
-        this.form.icon = res
-      } else {
-        this.$message.error('该图片不支持上传，请更换一张！')
-      }
-    },
-    beforeAvatarUpload: function (file) {
-      const isRightType = file.type.indexOf('image/') === 0
-      const isRightSize = file.size / 1024 / 1024 < 1
-      if (!isRightType) {
-        this.$message.error('上传图标必须为图片格式!')
-      }
-      if (!isRightSize) {
-        this.$message.error('上传图标大小不能超过 1MB!')
-      }
-      return isRightSize && isRightType
     },
     onSubmit: function () {
       this.$refs['form'].validate((valid) => {
         if (!valid) { return false }
-        this.$http.post('/manage/setting/save', Object.assign({}, this.form, {is_hot: this.form.is_hot ? 1 : 0}), {showLoading: true}).then((response) => {
-//          this.showForm = false
+        let buyTimeRange = {}
+        if (this.productStandard.buyTimeRange.length > 1) {
+          buyTimeRange.buy_start_time = dateFmt(this.productStandard.buyTimeRange[0])
+          buyTimeRange.buy_end_time = dateFmt(this.productStandard.buyTimeRange[1])
+        }
+        let postData = Object.assign({}, this.productStandard, buyTimeRange)
+        delete postData.buyTimeRange
+        if (this.editRowId === null) {
+          postData.product_id = this.productId
+        }
+        console.debug(postData)
+//        let a = 1
+//        if (a === 1) {
+//          return
+//        }
+        this.$http.post('/productStandard/save', postData, {showLoading: true}).then((response) => {
           this.$emit('update:showDialog', false)
-          if (this.form.id !== '') { // 编辑完成（刷新列表当前页）
+          if (this.productStandard.id !== '') { // 编辑完成（刷新列表当前页）
             this.$message({type: 'success', message: '编辑数据成功'})
-            bus.$emit(product.edit, this.form)
+            bus.$emit(productStandard.edit, postData)
           } else { // 新增完成（跳到第一页）
             this.$message({type: 'success', message: '添加数据成功'})
-            bus.$emit(product.add, this.form)
+            bus.$emit(productStandard.add, postData)
           }
         })
       })
@@ -217,9 +157,7 @@ export default {
       if (this.$refs['form']) { // 重置校验错误，必须执行，否则页面组件有问题
         this.$refs['form'].resetFields()
       }
-      this.form = Object.assign({}, this.resetForm)
-      this.typeDisable = false
-      this.topMenuDisable = false
+      this.productStandard = Object.assign({}, this.resetForm)
     }
   }
 }
@@ -235,4 +173,16 @@ export default {
 .avatar-img{
   max-width: 60px;
 }
+</style>
+
+<style>
+  .product-standard-form .el-form-item {
+    display: inline-block;
+    width: 300px;
+    margin-right: 20px;
+  }
+  .product-standard-form .el-form-item.line {
+    display: block;
+    width: auto;
+  }
 </style>

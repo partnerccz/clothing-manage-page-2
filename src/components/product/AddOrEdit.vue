@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="添加/编辑配置" :visible="showDialog" @update:visible="(val) => $emit('update:showDialog', val)" :close-on-click-modal=false @open="show" @close="reset">
+  <el-dialog title="商品添加/编辑" :visible="showDialog" @update:visible="(val) => $emit('update:showDialog', val)" :close-on-click-modal=false @open="show" @close="reset">
     <el-form ref="form" :model="product" :rules="rules" label-width="100px" label-position="right" class="form-style">
       <el-form-item v-if="this.editRowId !== null" label="商品ID" prop="id">{{product.id}}</el-form-item>
       <el-form-item label="商品名" prop="name">
@@ -96,11 +96,8 @@ export default {
 //    })
 //  },
   mounted: function () {
-//    this.reset()
     this.getTypes()
     this.show()
-    console.info('---------mounted')
-//    this.getTopMenu()
   },
   data: function () {
     return {
@@ -251,10 +248,10 @@ export default {
           this.$emit('update:showDialog', false) // 关闭弹窗
           if (this.product.id !== '') { // 编辑完成（刷新列表当前页）
             this.$message({type: 'success', message: '编辑数据成功'})
-            bus.$emit(product.edit, this.product)
+            bus.$emit(product.edit, postData)
           } else { // 新增完成（跳到第一页）
             this.$message({type: 'success', message: '添加数据成功'})
-            bus.$emit(product.add, this.product)
+            bus.$emit(product.add, postData)
           }
         })
       })

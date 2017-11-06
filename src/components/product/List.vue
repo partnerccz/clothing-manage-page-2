@@ -47,9 +47,6 @@
       :total="pageInfo.totalRec" class="table-pager">
     </el-pagination>
     <!--layout="total, sizes, prev, pager, next, jumper"-->
-    <transition name="standard" mode="out-in">
-      <sub-list v-show="showStandard" :standard.sync="showStandard"></sub-list>
-    </transition>
     <component :is="editCompName" :showDialog.sync="showEdit" :editRowId="editRowId"></component>
   </div>
 </template>
@@ -57,7 +54,6 @@
 <script>
 import bus, {product, productStandard} from '../../common/bus.js'
 import {localStorageKeys} from '../../common/const.js'
-import subList from '../productStandard/List'
 
 export default {
   name: 'product',
@@ -65,8 +61,7 @@ export default {
     // tableForm: resolve => require(['./AddOrEdit'], resolve) // 必须用下面的方式加载，否则会出现组件加载完成后立即销毁（一闪而过）
     tableForm: resolve => {
       require(['./AddOrEdit'], resolve)
-    },
-    subList
+    }
   },
   created: function () {
     bus.$on(product.search, (searchData) => { // 监听外部查询数据事件
@@ -187,16 +182,5 @@ export default {
 </script>
 
 <style scoped>
-  .table-list {
-    position: relative;
-    overflow: hidden;
-  }
-  .standard-enter-active, .standard-leave-active {
-    transition: all 0.3s ease;
-    left: 20% !important;
-  }
 
-  .standard-enter, .standard-leave-to /* .fade-leave-active in below version 2.1.8 */ {
-    left: 100% !important;
-  }
 </style>

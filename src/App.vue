@@ -8,16 +8,16 @@
       </div>
       <div class="center">
         <el-menu default-active="2" class="el-menu-1" :router=true>
-          <el-submenu index="1" class="el-menu-2">
-            <template slot="title">
-              <i class="el-icon-message"></i>
-              <span>导航一</span>
-            </template>
-            <el-menu-item index="/hello" class="el-menu-2">选项1</el-menu-item>
-            <el-menu-item index="1-2" class="el-menu-2">选项2</el-menu-item>
-            <el-menu-item index="1-3" class="el-menu-2">选项3</el-menu-item>
-            <el-menu-item index="1-4-1" class="el-menu-2">选项1</el-menu-item>
-          </el-submenu>
+          <!--<el-submenu index="1" class="el-menu-2">-->
+            <!--<template slot="title">-->
+              <!--<i class="el-icon-message"></i>-->
+              <!--<span>导航一</span>-->
+            <!--</template>-->
+            <!--<el-menu-item index="/hello" class="el-menu-2">选项1</el-menu-item>-->
+            <!--<el-menu-item index="1-2" class="el-menu-2">选项2</el-menu-item>-->
+            <!--<el-menu-item index="1-3" class="el-menu-2">选项3</el-menu-item>-->
+            <!--<el-menu-item index="1-4-1" class="el-menu-2">选项1</el-menu-item>-->
+          <!--</el-submenu>-->
           <el-menu-item index="/product">
             <i class="el-icon-menu"></i>
             <span slot="title">商品</span>
@@ -34,10 +34,10 @@
             <i class="el-icon-menu"></i>
             <span slot="title">分类管理</span>
           </el-menu-item>
-          <el-submenu index="3">
-            <template slot="title">导航三</template>
-            <el-menu-item index="3-1" class="el-menu-2">选项1234</el-menu-item>
-          </el-submenu>
+          <!--<el-submenu index="3">-->
+            <!--<template slot="title">导航三</template>-->
+            <!--<el-menu-item index="3-1" class="el-menu-2">选项1234</el-menu-item>-->
+          <!--</el-submenu>-->
         </el-menu>
       </div>
       <!--<div class="bottom">bottom</div>-->
