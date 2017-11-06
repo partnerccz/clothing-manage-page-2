@@ -146,13 +146,13 @@ export default {
 
 <style scoped lang="scss">
   .table-list {
-    position: absolute;
+    position: fixed;
     background: white;
     top:0;
     overflow-y: auto;
     height: 100%;
-    width: 80%;
-    left: 20%;
+    width: 70%;
+    left: 30%;
     z-index: 5;
     /* border-left: 1px solid #d7dee7; */
     box-shadow: -1px 0px 10px 0 rgba(0,0,0,0.3);
