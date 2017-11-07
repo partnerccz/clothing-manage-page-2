@@ -242,7 +242,7 @@ export default {
         for (let img of this.product.imgs) {
           imgs.push(img.url)
         }
-        let postData = Object.assign({}, this.product, address, {imgs: imgs})
+        let postData = Object.assign(this.resetForm, this.product, address, {imgs: imgs})
         delete postData.produceArea
         this.$http.post('/product/save', postData, {showLoading: true}).then((response) => {
           this.$emit('update:showDialog', false) // 关闭弹窗
