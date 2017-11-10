@@ -119,7 +119,7 @@ export default {
           }
           delete response.data.buy_start_time
           delete response.data.buy_end_time
-          this.productStandard = Object.assign({}, objNullToBlank(response.data), {buyTimeRange: timeRange})
+          this.productStandard = Object.assign(this.resetForm, objNullToBlank(response.data), {buyTimeRange: timeRange})
         })
       }
     },
@@ -136,11 +136,6 @@ export default {
         if (this.editRowId === null) {
           postData.product_id = this.productId
         }
-        console.debug(postData)
-//        let a = 1
-//        if (a === 1) {
-//          return
-//        }
         this.$http.post('/productStandard/save', postData, {showLoading: true}).then((response) => {
           this.$emit('update:showDialog', false)
           if (this.productStandard.id !== '') { // 编辑完成（刷新列表当前页）

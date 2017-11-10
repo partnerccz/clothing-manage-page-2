@@ -31,7 +31,7 @@
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="edit(scope.row)" type="text" size="small">行情</el-button>
+          <el-button @click="market(scope.row)" type="text" size="small">行情</el-button>
           <!--<el-button @click="setStatus(scope.row.status === 1 ? 0 : 1, [scope.row.id])" type="text" size="small" :class="scope.row.status === 1 ? 'disable' : 'enable'">{{scope.row.status === 1 ? '禁用' : '启用'}}</el-button>-->
           <el-button @click="setStatus(-1, [scope.row.id])" type="text" size="small" class="delete">删除</el-button>
         </template>
@@ -58,9 +58,12 @@ import {localStorageKeys} from '../../common/const.js'
 export default {
   name: 'product',
   components: {
-    // tableForm: resolve => require(['./AddOrEdit'], resolve) // 必须用下面的方式加载，否则会出现组件加载完成后立即销毁（一闪而过）
-    tableForm: resolve => {
+    // productEdit: resolve => require(['./AddOrEdit'], resolve) // 必须用下面的方式加载，否则会出现组件加载完成后立即销毁（一闪而过）
+    productEdit: resolve => {
       require(['./AddOrEdit'], resolve)
+    },
+    market: resolve => {
+      require(['./Market'], resolve)
     }
   },
   created: function () {
@@ -138,7 +141,12 @@ export default {
       })
     },
     edit: function (row) { // 编辑某条记录
-      this.editCompName = 'tableForm'
+      this.editCompName = 'productEdit'
+      this.editRowId = row.id
+      this.showEdit = true
+    },
+    market: function (row) {
+      this.editCompName = 'market'
       this.editRowId = row.id
       this.showEdit = true
     },
@@ -146,7 +154,7 @@ export default {
       bus.$emit(productStandard.search, row.id)
     },
     add: function () { // 添加记录
-      this.editCompName = 'tableForm'
+      this.editCompName = 'productEdit'
       this.editRowId = null
       this.showEdit = true
     },
