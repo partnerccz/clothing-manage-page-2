@@ -60,6 +60,8 @@ httpIntence.interceptors.response.use(function (response) { // 如果请求配�
 }, function (error) { // 检查请求是否异常，如果异常弹出提示
   if (error.response && error.response.status === 420) { // 后台设置了420自定义错误，此处显示具体错误原因
     Message.warning(decodeURI(error.response.statusText))
+  } else if (error.response && error.response.status === 410) { // 身份认证失败
+    window.location = '/login'
   } else {
     Message.error('请求数据异常，请稍后重试(' + error.message + ')')
   }
