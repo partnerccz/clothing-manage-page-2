@@ -180,9 +180,9 @@ export default {
   }
   .el-upload-list--picture-card .el-upload-list__item,.el-upload--picture-card {
     width: 150px;
-    height: 100px;
+    height: 150px;
   }
   .el-upload--picture-card {
-    line-height: 110px;
+    line-height: 150px;
   }
 </style>

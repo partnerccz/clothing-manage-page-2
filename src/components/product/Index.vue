@@ -44,7 +44,7 @@ export default {
   }
   .standard-enter-active, .standard-leave-active {
     transition: all 0.3s ease;
-    left: 20% !important;
+    left: 30% !important;
   }
 
   .standard-enter, .standard-leave-to /* .fade-leave-active in below version 2.1.8 */ {

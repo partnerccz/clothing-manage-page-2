@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import bus, {productStandard} from '../../common/bus.js'
+import bus, { productStandard, product } from '../../common/bus.js'
 
 export default {
   name: 'productStandardList',
@@ -103,7 +103,10 @@ export default {
       }
     },
     _setStatus: function (status, selectIds) {
-      this.$http.post('/productStandard/changeStatus', {ids: selectIds, status: status}).then((response) => {
+      this.$http.post('/productStandard/changeStatus', {productId: this.searchData.productId, ids: selectIds, status: status}).then((response) => {
+        this.getData()
+        bus.$emit(product.edit, null) // 刷新商品列表
+      }).catch((e) => { // 异常后重新获取数据，正确显示状态
         this.getData()
       })
     },

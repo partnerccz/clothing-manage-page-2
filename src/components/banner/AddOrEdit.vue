@@ -136,7 +136,7 @@ export default {
       }
       try {
         this.form = Object.assign({}, this.resetForm)
-      } catch (e) { console.debug(e) }
+      } catch (e) {}
     }
   }
 }

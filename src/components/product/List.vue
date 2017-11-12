@@ -138,6 +138,8 @@ export default {
       // let testObj = [{id: 1, name: 'test', mark: 'test'}, [id: 2, name: 'test2', mark: 'test2'], [id: 3, name: 'test3', mark: 'test3']}
       this.$http.post('/product/setStatus', {ids: selectIds, status: status}).then((response) => {
         this.getData()
+      }).catch((e) => { // 异常后重新获取数据，正确显示状态
+        this.getData()
       })
     },
     edit: function (row) { // 编辑某条记录

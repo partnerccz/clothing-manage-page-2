@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import bus, { productStandard } from '../../common/bus.js'
+import bus, { productStandard, product } from '../../common/bus.js'
 import { objNullToBlank, dateFmt, stringFmtDate } from '../../common/utils.js'
 
 export default {
@@ -138,6 +138,7 @@ export default {
         }
         this.$http.post('/productStandard/save', postData, {showLoading: true}).then((response) => {
           this.$emit('update:showDialog', false)
+          bus.$emit(product.edit, null) // 刷新商品列表
           if (this.productStandard.id !== '') { // 编辑完成（刷新列表当前页）
             this.$message({type: 'success', message: '编辑数据成功'})
             bus.$emit(productStandard.edit, postData)

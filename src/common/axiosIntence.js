@@ -59,7 +59,11 @@ httpIntence.interceptors.response.use(function (response) { // 如果请求配�
   return response
 }, function (error) { // 检查请求是否异常，如果异常弹出提示
   if (error.response && error.response.status === 420) { // 后台设置了420自定义错误，此处显示具体错误原因
-    Message.warning(decodeURI(error.response.statusText))
+    let errorText = decodeURI(error.response.statusText)
+    if (errorText === 'unknown') {// 后台即使使用response.setStatus设置错误文本，这里也拿不到，所以后台也会设置到header中
+      errorText = decodeURI(error.response.headers['errror-text'])
+    }
+    Message.warning(decodeURI(errorText))
   } else {
     Message.error('请求数据异常，请稍后重试(' + error.message + ')')
   }
