@@ -42,6 +42,11 @@
       </div>
       <!--<div class="bottom">bottom</div>-->
     </div>
+    <div>
+      <el-header style="height: 90px; text-align: right; font-size: 12px">
+        <el-button @click="loginOut" type="text" style="color: #fff">注销</el-button>
+      </el-header>
+    </div>
     <div class="content">
       <!--<div style="width: 1000px;background: red;">456</div>-->
       <keep-alive>
@@ -53,11 +58,23 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  methods: {
+    loginOut: function (data) { // 点击搜索时执行
+      this.$http.post('/login/logout', Object.assign({})).then((response) => {
+        this.$router.push({path: '/login'})
+      })
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
+  .el-header {
+    background-color: #545c64;
+    color: #fff;
+    line-height: 95px;
+  }
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
