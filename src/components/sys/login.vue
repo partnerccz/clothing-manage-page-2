@@ -2,7 +2,7 @@
   <div class="login-root">
     <div class="login-container">
       <div class="login-meta">
-        <img src="../assets/logo.png">
+        <img src="../../assets/logo.png">
         <p>后台管理系统</p>
       </div>
       <div class="login-form" @keyup.enter="doLogin">
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import {homeUrl} from '../common/const.js'
+  import {homeUrl} from '../../common/const.js'
   export default {
     data: function () {
       return {
