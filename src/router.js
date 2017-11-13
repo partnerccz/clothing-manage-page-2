@@ -22,6 +22,7 @@ export default new Router({
       path: '/',
       name: 'Main',
       component: Main,
+      redirect: '/product',
       children: [
         {
           path: '/product',
