@@ -49,7 +49,7 @@
       },
       doLogin: function () {
         if (this.checkValidity()) {
-          this.$http.post('/login', Object.assign({}, {username: this.username, password: this.password})).then((response) => {
+          this.$http.post('/login/auth', Object.assign({}, {username: this.username, password: this.password})).then((response) => {
 //          window.localStorage.setItem('username', this.username)
             this.$router.push({path: homeUrl})
           })
