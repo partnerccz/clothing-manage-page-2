@@ -58,10 +58,12 @@ httpIntence.interceptors.response.use(function (response) { // 如果请求配�
   response.config.showLoading && globalLoadingInstance.hide()
   return response
 }, function (error) { // 检查请求是否异常，如果异常弹出提示
+  // console.info(arguments)
   if (error.response && error.response.status === 420) { // 后台设置了420自定义错误，此处显示具体错误原因
-    let errorText = decodeURI(error.response.statusText)
-    if (errorText === 'unknown') { // 后台即使使用response.setStatus设置错误文本，这里也拿不到，所以后台也会设置到header中
-      errorText = decodeURI(error.response.headers['errror-text'])
+    // console.info(error)
+    let errorText = error.response.statusText
+    if (errorText === null || errorText === '' || errorText === 'unknown') { // 后台即使使用response.setStatus设置错误文本，这里也拿不到，所以后台也会设置到header中
+      errorText = error.response.headers['errror-text']
     }
     Message.warning(decodeURI(errorText))
   } else if (error.response && error.response.status === 410) { // 身份认证失败

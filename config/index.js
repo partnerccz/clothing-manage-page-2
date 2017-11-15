@@ -15,7 +15,7 @@ module.exports = {
     assetsRoot: devConfig.BUILD_PATH,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    productionSourceMap: true,
+    productionSourceMap: false,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
     // Before setting to `true`, make sure to:
@@ -34,6 +34,7 @@ module.exports = {
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
+    productionSourceMap: true,
     proxyTable: {
       '/api': {
         target: devConfig.BACKEND_SERVER,
