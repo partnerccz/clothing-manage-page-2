@@ -44,7 +44,7 @@ export default {
     }
   },
   mounted: function () {
-    this.reset()
+    this.show()
   },
   methods: {
     show: function () {

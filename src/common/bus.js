@@ -32,4 +32,12 @@ export const productStandard = {
   add: 'productStandard-add',
   edit: 'productStandard-edit'
 }
+
+export const role = {
+  search: 'role-search',
+  showAddOrEdit: 'role-showAddOrEdit',
+  refreshListForAdd: 'role-refreshListForAdd',
+  refreshListForEdit: 'role-refreshListForEdit'
+}
+
 export default new Vue()
