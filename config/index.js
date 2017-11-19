@@ -5,13 +5,14 @@
 // const path = require('path')
 
 var devConfig = require('./dev.env')
+var productConfig = require('./prod.env')
 module.exports = {
   build: {
     env: require('./prod.env'),
     // index: path.resolve(__dirname, '../dist/index.html'),
     // assetsRoot: path.resolve(__dirname, '../dist'),
-    index: process.env.BUILD_PATH + '/index.html',
-    assetsRoot: process.env.BUILD_PATH,
+    index: productConfig.BUILD_PATH + '/index.html',
+    assetsRoot: productConfig.BUILD_PATH,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     productionSourceMap: false,
@@ -25,11 +26,11 @@ module.exports = {
     // View the bundle analyzer report after build finishes:
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
-    bundleAnalyzerReport: process.env.npm_config_report
+    bundleAnalyzerReport: productConfig.npm_config_report
   },
   dev: {
     env: require('./dev.env'),
-    port: process.env.DEV_PORT || 8080,
+    port: devConfig.DEV_PORT,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
