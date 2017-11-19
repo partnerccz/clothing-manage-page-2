@@ -50,7 +50,7 @@ export default {
   name: 'banner-AddOrEdit',
   props: ['showDialog', 'editRowId'],
   mounted: function () {
-    this.reset()
+    this.show()
   },
   data: function () {
     return {

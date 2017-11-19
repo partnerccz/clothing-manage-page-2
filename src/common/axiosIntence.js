@@ -66,7 +66,9 @@ httpIntence.interceptors.response.use(function (response) { // 如果请求配�
       errorText = error.response.headers['error-text']
     }
     Message.warning(decodeURI(errorText))
-  } else if (error.response && error.response.status === 410) { // 身份认证失败
+  } else if (error.response && error.response.status === 401) { // 身份认证失败
+    window.location = '/login'
+  } else if (error.response && error.response.status === 403) { // 没有操作权限
     window.location = '/login'
   } else {
     Message.error('请求数据异常，请稍后重试(' + error.message + ')')
