@@ -5,14 +5,13 @@
 // const path = require('path')
 
 var devConfig = require('./dev.env')
-
 module.exports = {
   build: {
     env: require('./prod.env'),
     // index: path.resolve(__dirname, '../dist/index.html'),
     // assetsRoot: path.resolve(__dirname, '../dist'),
-    index: devConfig.BUILD_PATH + '/index.html',
-    assetsRoot: devConfig.BUILD_PATH,
+    index: process.env.BUILD_PATH + '/index.html',
+    assetsRoot: process.env.BUILD_PATH,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     productionSourceMap: false,
@@ -30,7 +29,7 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: devConfig.DEV_PORT,
+    port: process.env.DEV_PORT || 8080,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
@@ -38,6 +37,7 @@ module.exports = {
     proxyTable: {
       '/api': {
         target: devConfig.BACKEND_SERVER,
+        // target: process.env.BACKEND_SERVER, // 不能使用这种方式，获取不到变量
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

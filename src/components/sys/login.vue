@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import {homeUrl} from '../../common/const.js'
+  import { homeUrl } from '../../common/const.js'
   export default {
     data: function () {
       return {
@@ -49,9 +49,10 @@
       },
       doLogin: function () {
         if (this.checkValidity()) {
-          this.$http.post('/login/auth', Object.assign({}, {username: this.username, password: this.password})).then((response) => {
+          this.$http.post('/login/auth', Object.assign({}, {username: this.username, password: this.password}), {showLoading: true}).then((response) => {
 //          window.localStorage.setItem('username', this.username)
-            this.$router.push({path: homeUrl})
+//            this.$router.push({path: homeUrl})
+            window.location = homeUrl
           })
         }
       }
