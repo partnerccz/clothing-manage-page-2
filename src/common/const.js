@@ -3,7 +3,8 @@ export const localStorageKeys = {
   typeGroupPageSize: 'typeGroup-page-size',
   typePageSize: 'type-page-size',
   productPageSize: 'product-page-size',
-  rolePageSize: 'role-page-size'
+  rolePageSize: 'role-page-size',
+  userPageSize: 'user-page-size'
 }
 export const ajaxPrefix = '/api'// ajax请求url前缀，测试环境下使用/api开头，前端做代理（url前缀匹配），生产环境为/
 export const homeUrl = '/'// 后台首页

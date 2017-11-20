@@ -10,6 +10,11 @@
       <el-form-item label="角色描述" prop="describe">
         <el-input type="textarea" v-model="form.describe"></el-input>
       </el-form-item>
+      <el-form-item label="关联菜单" prop="menuIds">
+        <el-checkbox-group v-model="form.menuIds">
+          <el-checkbox v-for="item in menuStore.menuList" :label="item.id" :key="item.id">{{item.name}}</el-checkbox>
+        </el-checkbox-group>
+      </el-form-item>
       <el-form-item label="关联权限" prop="permissionIds">
         <el-checkbox-group v-model="form.permissionIds">
           <el-checkbox v-for="item in permissionStore.permissionList" :label="item.id" :key="item.id">{{item.permission_name}}</el-checkbox>
@@ -26,7 +31,7 @@
 <script>
 import bus, {role} from '../../../common/bus.js'
 import {objNullToBlank} from '../../../common/utils.js'
-import { PERMISSION_LIST } from '../../../store/action-types'
+import { MENU_LIST, PERMISSION_LIST } from '../../../store/action-types'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -34,13 +39,14 @@ export default {
   props: ['showDialog', 'editRowId'],
   mounted: function () {
     this.getPermissions()
+    this.getMenus()
     this.show()
   },
   data: function () {
     return {
 //      showForm: false,
 //      loading: false,
-      resetForm: {id: '', role_key: '', role_name: '', describe: '', permissionIds: []},
+      resetForm: {id: '', role_key: '', role_name: '', describe: '', menuIds: [], permissionIds: []},
       form: {},
       rules: {
         role_key: [
@@ -49,6 +55,9 @@ export default {
         role_name: [
           {type: 'string', required: true, message: '请输入角色名称', trigger: 'blur'}
         ],
+        menuIds: [
+          {type: 'array', required: true, message: '请授予访问菜单', trigger: 'blur,change'}
+        ],
         permissionIds: [
           {type: 'array', required: true, message: '请授予权限', trigger: 'blur,change'}
         ]
@@ -56,7 +65,8 @@ export default {
     }
   },
   computed: mapState({
-    'permissionStore': 'permission'
+    'permissionStore': 'permission',
+    'menuStore': 'menu'
   }),
   methods: {
     show: function () {
@@ -68,6 +78,7 @@ export default {
       }
     },
     ...mapActions({
+      getMenus: MENU_LIST,
       getPermissions: PERMISSION_LIST
     }),
     onSubmit: function () {
