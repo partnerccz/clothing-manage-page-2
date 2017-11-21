@@ -13,7 +13,7 @@ const actions = {
     if (state.permissionList !== null) { // 已初始化过，不需要再获取数据
       return
     }
-    axiosIntence.post('/manage/permission/getPermissionList').then((response) => {
+    axiosIntence.post('/manage/common/getPermissionList').then((response) => {
       commit(PERMISSION_LIST_SET, {permissionList: response.data}) // 提交设置类型的变更
     })
   }

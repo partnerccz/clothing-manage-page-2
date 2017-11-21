@@ -40,4 +40,11 @@ export const role = {
   refreshListForEdit: 'role-refreshListForEdit'
 }
 
+export const user = {
+  search: 'user-search',
+  showAddOrEdit: 'user-showAddOrEdit',
+  refreshListForAdd: 'user-refreshListForAdd',
+  refreshListForEdit: 'user-refreshListForEdit'
+}
+
 export default new Vue()

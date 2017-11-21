@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import {homeUrl} from './common/const.js'
 // import Hello from '@/components/Hello'
 
 Vue.use(Router)
@@ -11,6 +12,7 @@ const TypeGroup = resolve => require(['./components/typeGroup/Index.vue'], resol
 const Type = resolve => require(['./components/type/Index.vue'], resolve)
 const Login = resolve => require(['./components/sys/login.vue'], resolve)
 const Role = resolve => require(['./components/user/roles/Index.vue'], resolve)
+const User = resolve => require(['./components/user/users/Index.vue'], resolve)
 
 export default new Router({
   mode: 'history',
@@ -23,7 +25,7 @@ export default new Router({
       path: '/',
       name: 'Main',
       component: Main,
-      redirect: '/product',
+      redirect: homeUrl,
       children: [
         {
           path: '/product',
@@ -45,6 +47,10 @@ export default new Router({
           path: '/manage/role',
           name: 'Role',
           component: Role
+        }, {
+          path: '/manage/user',
+          name: 'User',
+          component: User
         }
       ]
     }
