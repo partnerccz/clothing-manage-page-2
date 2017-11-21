@@ -17,29 +17,9 @@
         <!--<el-menu-item index="1-3" class="el-menu-2">选项3</el-menu-item>-->
         <!--<el-menu-item index="1-4-1" class="el-menu-2">选项1</el-menu-item>-->
         <!--</el-submenu>-->
-        <el-menu-item index="/product">
+        <el-menu-item v-for="item in menuByUidStore.menuList" :index="item.url" :label="item.id" :key="item.id">
           <i class="el-icon-menu"></i>
-          <span slot="title">商品</span>
-        </el-menu-item>
-        <el-menu-item index="/manage/banner">
-          <i class="el-icon-menu"></i>
-          <span slot="title">幻灯片</span>
-        </el-menu-item>
-        <el-menu-item index="/manage/typeGroup">
-          <i class="el-icon-menu"></i>
-          <span slot="title">标签管理</span>
-        </el-menu-item>
-        <el-menu-item index="/manage/type">
-          <i class="el-icon-menu"></i>
-          <span slot="title">分类管理</span>
-        </el-menu-item>
-        <el-menu-item index="/manage/user">
-          <i class="el-icon-menu"></i>
-          <span slot="title">用户管理</span>
-        </el-menu-item>
-        <el-menu-item index="/manage/role">
-          <i class="el-icon-menu"></i>
-          <span slot="title">角色管理</span>
+          <span slot="title">{{item.name}}</span>
         </el-menu-item>
         <!--<el-submenu index="3">-->
         <!--<template slot="title">导航三</template>-->
@@ -52,8 +32,22 @@
 </template>
 
 <script>
+import { MENU_LIST } from '../../store/action-types'
+import { mapState, mapActions } from 'vuex'
+
 export default {
-  name: 'sys-meun'
+  name: 'sys-meun',
+  mounted: function () {
+    this.getMenusByUid()
+  },
+  computed: mapState({
+    'menuByUidStore': 'menuByUid'
+  }),
+  methods: {
+    ...mapActions({
+      getMenusByUid: MENU_LIST
+    })
+  }
 }
 </script>
 

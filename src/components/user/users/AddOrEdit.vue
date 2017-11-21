@@ -23,7 +23,7 @@
 <script>
 import bus, {user} from '../../../common/bus.js'
 import {objNullToBlank} from '../../../common/utils.js'
-import { ROLE_LIST } from '../../../store/action-types'
+import { ROLE_ALL_LIST } from '../../../store/action-types'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -65,7 +65,7 @@ export default {
       }
     },
     ...mapActions({
-      getRoles: ROLE_LIST
+      getRoles: ROLE_ALL_LIST
     }),
     onSubmit: function () {
       this.$refs['form'].validate((valid) => {

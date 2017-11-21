@@ -31,7 +31,7 @@
 <script>
 import bus, {role} from '../../../common/bus.js'
 import {objNullToBlank} from '../../../common/utils.js'
-import { MENU_LIST, PERMISSION_LIST } from '../../../store/action-types'
+import { MENU_ALL_LIST, PERMISSION_LIST } from '../../../store/action-types'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -78,7 +78,7 @@ export default {
       }
     },
     ...mapActions({
-      getMenus: MENU_LIST,
+      getMenus: MENU_ALL_LIST,
       getPermissions: PERMISSION_LIST
     }),
     onSubmit: function () {

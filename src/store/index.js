@@ -7,6 +7,7 @@ import product from './modules/productStore'
 import permission from './modules/permissionStore'
 import role from './modules/roleStore'
 import menu from './modules/menuStore'
+import menuByUid from './modules/menuByUidStore'
 // import * as actions from './actions'
 // import * as getters from './getters'
 // import cart from './modules/cart'
@@ -45,7 +46,8 @@ export default new Vuex.Store({
     product,
     permission,
     role,
-    menu
+    menu,
+    menuByUid
     // types: {
     //   namespaced: true,// 如果使用了命名空间，则getters、actions、mutations的触发路径会有变化，默认是挂在全局命名空间的，但是命名空间不影响state的路径（state.模块名称）
     //   ...types
