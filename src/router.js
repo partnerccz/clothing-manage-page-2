@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import {homeUrl} from './common/const.js'
 // import Hello from '@/components/Hello'
 
 Vue.use(Router)
@@ -24,7 +25,7 @@ export default new Router({
       path: '/',
       name: 'Main',
       component: Main,
-      redirect: '/product',
+      redirect: homeUrl,
       children: [
         {
           path: '/product',
