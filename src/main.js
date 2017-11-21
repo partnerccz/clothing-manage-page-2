@@ -13,7 +13,7 @@ Vue.use(ElementUI) // 加载element组件
 
 Vue.prototype.$http = axiosIntence // 将http设置到vue组件中
 
-Vue.prototype._uploadFilePath = ajaxPrefix + '/manage/common/upload'// 上传地址
+Vue.prototype._uploadFilePath = ajaxPrefix + 'manage/common/upload'// 上传地址
 // Vue.prototype._ajaxPrefix = '/api/'// 测试使用，用于代理匹配，上线打包时需更改为/
 
 // 设置为 false 以阻止 vue 在启动时生成生产提示
