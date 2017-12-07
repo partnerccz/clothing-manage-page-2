@@ -3,6 +3,7 @@ export const localStorageKeys = {
   typeGroupPageSize: 'typeGroup-page-size',
   typePageSize: 'type-page-size',
   productPageSize: 'product-page-size',
+  orderPageSize: 'order-page-size',
   rolePageSize: 'role-page-size',
   userPageSize: 'user-page-size'
 }

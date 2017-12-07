@@ -7,6 +7,7 @@ Vue.use(Router)
 
 const Main = resolve => require(['./components/sys/Home.vue'], resolve)
 const Product = resolve => require(['./components/product/Index.vue'], resolve)
+const Order = resolve => require(['./components/order/Index.vue'], resolve)
 const Banner = resolve => require(['./components/banner/Index.vue'], resolve)
 const TypeGroup = resolve => require(['./components/typeGroup/Index.vue'], resolve)
 const Type = resolve => require(['./components/type/Index.vue'], resolve)
@@ -51,6 +52,10 @@ export default new Router({
           path: '/manage/user',
           name: 'User',
           component: User
+        }, {
+          path: '/manage/order',
+          name: 'Order',
+          component: Order
         }
       ]
     }

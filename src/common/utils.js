@@ -9,6 +9,17 @@ export function dateFmt (date) {
   return moment(date).format('YYYY-MM-DD HH:mm:ss')
 }
 
+export function dateArrayFmt (dateArray) {
+  if (dateArray === undefined || dateArray === null || dateArray.length === 0) {
+    return []
+  }
+  let arr = []
+  for (let i in dateArray) {
+    arr.push(moment(dateArray[i]).format('YYYY-MM-DD'))
+  }
+  return arr
+}
+
 // 将对象中的null属性转换为空字符串
 export function objNullToBlank (obj) {
   if (obj === undefined || obj === null) {

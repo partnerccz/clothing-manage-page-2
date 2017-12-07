@@ -33,6 +33,10 @@ export const productStandard = {
   edit: 'productStandard-edit'
 }
 
+export const order = {
+  search: 'order-search'
+}
+
 export const role = {
   search: 'role-search',
   showAddOrEdit: 'role-showAddOrEdit',
