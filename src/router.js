@@ -14,6 +14,7 @@ const Type = resolve => require(['./components/type/Index.vue'], resolve)
 const Login = resolve => require(['./components/sys/login.vue'], resolve)
 const Role = resolve => require(['./components/user/roles/Index.vue'], resolve)
 const User = resolve => require(['./components/user/users/Index.vue'], resolve)
+const Test = resolve => require(['./components/test/Index.vue'], resolve)
 
 export default new Router({
   mode: 'history',
@@ -56,6 +57,10 @@ export default new Router({
           path: '/manage/order',
           name: 'Order',
           component: Order
+        }, {
+          path: '/manage/test',
+          name: 'Test',
+          component: Test
         }
       ]
     }

@@ -51,4 +51,10 @@ export const user = {
   refreshListForEdit: 'user-refreshListForEdit'
 }
 
+export const test = {
+  search: 'test-search',
+  showAddOrEdit: 'test-showAddOrEdit',
+  refreshListForAdd: 'test-refreshListForAdd',
+  refreshListForEdit: 'test-refreshListForEdit'
+}
 export default new Vue()
